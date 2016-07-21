@@ -19,8 +19,15 @@ public class Test {
 			
 			//生成随机秘钥
 //			KeyPair keyPair = RSAUtils.generateRSAKeyPair();
-//			publicKeyStr = RSAUtils.byte2hex(keyPair.getPublic().getEncoded());
-//			privateKeyStr = RSAUtils.byte2hex(keyPair.getPrivate().getEncoded());
+//			publicKey = keyPair.getPublic();
+//			privateKey = keyPair.getPrivate();
+//			
+//			publicKeyStr = RSAUtils.byte2hex(publicKey.getEncoded());
+//			privateKeyStr = RSAUtils.byte2hex(privateKey.getEncoded());
+			
+//			byte[] encryptData = RSAUtils.encryptData(enRsaBytes, publicKey);
+//			enRsaStr = RSAUtils.byte2hex(encryptData);
+			
 			
 			//使用上面指定的数据初始化
 			RSAHelper rsaHelper = RSAHelper.getInstance();
@@ -29,8 +36,6 @@ public class Test {
 			System.out.println(System.currentTimeMillis() + "公钥==" + publicKeyStr);
 			System.out.println(System.currentTimeMillis() + "私钥==" + privateKeyStr);
 			
-//			byte[] encryptData = RSAUtils.encryptData(enRsaBytes, publicKey);
-//			enRsaStr = RSAUtils.byte2hex(encryptData);
 			System.out.println(System.currentTimeMillis() + "加密后==" + enRsaStr);
 			
 			String decryptData = new String(rsaHelper.decryptData(RSAHelper.hex2byte(enRsaStr)),"utf-8");

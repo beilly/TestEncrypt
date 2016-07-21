@@ -35,6 +35,10 @@ public class RSAHelper {
 		return setPublicKey(RSAUtils.loadPublicKey(publicKeyStr)).setPrivateKey(RSAUtils.loadPrivateKey(privateKeyStr));
 	}
 	
+	public RSAHelper init(byte[] publicKeyBytes, byte[] privateKeyBytes) throws Exception{
+		return setPublicKey(RSAUtils.getPublicKey(publicKeyBytes)).setPrivateKey(RSAUtils.getPrivateKey(privateKeyBytes));
+	}
+	
 
 	public RSAHelper setPublicKey(PublicKey publicKey) {
 		this.publicKey = publicKey;

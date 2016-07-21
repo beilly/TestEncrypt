@@ -7,6 +7,7 @@ import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.interfaces.RSAPrivateKey;
@@ -18,19 +19,23 @@ import java.security.spec.X509EncodedKeySpec;
 
 import javax.crypto.Cipher;
 
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+
 /**
  * @author Mr.Zheng
  * @date 2014年8月22日 下午1:44:23
  */
 public final class RSAUtils {
+	private static String RSA_ALL = "RSA/None/PKCS1Padding";
 	private static String RSA = "RSA";
 
 	/**
 	 * 随机生成RSA密钥对(默认密钥长度为1024)
 	 * 
 	 * @return
+	 * @throws Exception 
 	 */
-	public static KeyPair generateRSAKeyPair() {
+	public static KeyPair generateRSAKeyPair() throws Exception {
 		return generateRSAKeyPair(1024);
 	}
 
@@ -41,8 +46,9 @@ public final class RSAUtils {
 	 *            密钥长度，范围：512～2048<br>
 	 *            一般1024
 	 * @return
+	 * @throws Exception 
 	 */
-	public static KeyPair generateRSAKeyPair(int keyLength) {
+	public static KeyPair generateRSAKeyPair(int keyLength) throws Exception {
 		try {
 			KeyPairGenerator kpg = KeyPairGenerator.getInstance(RSA);
 			kpg.initialize(keyLength);
@@ -65,7 +71,7 @@ public final class RSAUtils {
 	 */
 	public static byte[] encryptData(byte[] data, PublicKey publicKey) {
 		try {
-			Cipher cipher = Cipher.getInstance(RSA);
+			Cipher cipher = Cipher.getInstance(RSA_ALL, new BouncyCastleProvider());
 			// 编码前设定编码方式及密钥
 			cipher.init(Cipher.ENCRYPT_MODE, publicKey);
 			// 传入编码数据并返回编码结果
@@ -87,7 +93,7 @@ public final class RSAUtils {
 	 */
 	public static byte[] decryptData(byte[] encryptedData, PrivateKey privateKey) {
 		try {
-			Cipher cipher = Cipher.getInstance(RSA);
+			Cipher cipher = Cipher.getInstance(RSA_ALL, new BouncyCastleProvider());
 			cipher.init(Cipher.DECRYPT_MODE, privateKey);
 			return cipher.doFinal(encryptedData);
 		} catch (Exception e) {
